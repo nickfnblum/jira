@@ -69,6 +69,7 @@ describe('GitHub Actions', () => {
         },
       }));
     });
+
     it('should not update Jira issue if there are no issue Keys in the branch name', async () => {
       const payload = require('../fixtures/branch-no-issues.json');
       const getLastCommit = jest.fn();
@@ -79,10 +80,10 @@ describe('GitHub Actions', () => {
 
     it('should exit early if ref_type is not a branch', async () => {
       const payload = require('../fixtures/branch-invalid-ref_type.json');
-      const parseSmartCommit = jest.fn();
+      const parseBranch = jest.fn();
 
       await app.receive(payload);
-      expect(parseSmartCommit).not.toBeCalled();
+      expect(parseBranch).not.toBeCalled();
     });
   });
 

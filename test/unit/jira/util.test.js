@@ -18,7 +18,7 @@ describe('Jira util', () => {
     beforeEach(() => {
       jiraClient = {
         baseURL: 'http://example.com',
-        issues: td.object(['get']),
+        issues: td.object(['get', 'parse']),
       };
 
       util = getJiraUtil(jiraClient);

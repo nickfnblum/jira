@@ -1,10 +1,11 @@
 const nock = require('nock');
-const parseSmartCommit = require('../../../lib/transforms/smart-commit');
+const issueKeyParser = require('../../../issueKeyParser');
 const emptyNodesFixture = require('../../fixtures/api/graphql/branch-empty-nodes.json');
 const createJob = require('../../setup/create-job');
 
 function makeExpectedResponse({ branchName }) {
-  const { issueKeys } = parseSmartCommit(branchName);
+  const issueKeys = issueKeyParser().parse(branchName);
+
   return {
     preventTransitions: true,
     repositories: [
