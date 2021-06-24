@@ -1,6 +1,6 @@
 import {StatsD, StatsCb, Tags} from 'hot-shots';
 import bunyan from 'bunyan';
-import {Request, NextFunction} from 'express';
+import {Request, Response, NextFunction} from 'express';
 
 const isTest = process.env.NODE_ENV === 'test'
 
@@ -22,24 +22,12 @@ const statsd = new StatsD({
   mock: isTest,
 });
 
-interface StatsdRequest extends Request {
-  statsdKey: string;
-}
-
-export const expressStatsdMetrics = (path) =>  {
-  return function (req: StatsdRequest, _, next: NextFunction) {
-    const method = req.method || 'unknown_method';
-    req.statsdKey = ['http', method.toLowerCase(), path].join('.');
-    next();
-  };
-}
-
 /**
  * High-resolution timer
  *
  * @returns {function(): number} A function to call to get the duration since this function was created
  */
-function hrtimer() {
+ function hrtimer() {
   const start = process.hrtime();
 
   return () => {
@@ -47,6 +35,30 @@ function hrtimer() {
     const seconds = durationComponents[0];
     const nanoseconds = durationComponents[1];
     return seconds * 1000 + nanoseconds / 1e6;
+  };
+}
+
+interface StatsdRequest extends Request {
+  statsdKey: string;
+  statsdTags: string[];
+}
+
+export const expressStatsdMetrics = (path: string) =>  {
+  return function (req: StatsdRequest, res: Response, next: NextFunction) {
+    const expressStatsdLogger = bunyan.createLogger({ name: 'elapsedTimeInMs' });
+    const method = req.method || 'unknown_method';
+
+    req.statsdKey = ['http', method.toLowerCase(), path].join('.');
+    expressStatsdLogger.info("before finishing")
+    res.on("finish", () => {
+      const elapsedTimeInMs = hrtimer()
+      expressStatsdLogger.info("%s : %fms", req.path, elapsedTimeInMs);
+
+      req.statsdTags = [`elapsedTimeInMs: ${elapsedTimeInMs}`]
+    });
+
+    expressStatsdLogger.info("after finishing")
+    next();
   };
 }
 
