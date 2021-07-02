@@ -18,7 +18,7 @@
     "@atlaskit/reduced-ui-pack": "^8.19.0",
     "@octokit/auth-app": "^2.6.0",
     "@sentry/integrations": "^5.15.5",
-    "@sentry/node": "^5.15.5",
+    "@sentry/node": "^5.30.0",
     "atlassian-jwt": "^0.1.5",
     "axios": "^0.21.1",
     "body-parser": "^1.18.3",
