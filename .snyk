@@ -1,0 +1,30 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - atlassian-jwt > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: atlassian-jwt > lodash
+    - bull > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: bull > lodash
+    - express-validator > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: express-validator > lodash
+    - sequelize > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: sequelize > lodash
+    - sequelize-cli > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: sequelize-cli > lodash
+    - newrelic > async > lodash:
+        patched: '2023-06-27T17:47:40.587Z'
+        id: SNYK-JS-LODASH-567746
+        path: newrelic > async > lodash

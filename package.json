@@ -11,7 +11,9 @@
     "test": "jest --forceExit",
     "posttest": "npm run lint",
     "test:watch": "jest --watch --notify --notifyMode=change",
-    "worker": "node --no-deprecation bin/worker"
+    "worker": "node --no-deprecation bin/worker",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "@atlaskit/css-reset": "^2.0.5",
@@ -48,7 +50,8 @@
     "sequelize": "^5.21.7",
     "sequelize-cli": "^5.5.1",
     "sequelize-encrypted": "^1.0.0",
-    "throng": "^4.0.0"
+    "throng": "^4.0.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@types/bull": "^3.12.2",
@@ -81,5 +84,6 @@
       "<rootDir>/test/setup"
     ],
     "globalTeardown": "<rootDir>/test/teardown"
-  }
+  },
+  "snyk": true
 }
